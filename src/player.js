@@ -26,9 +26,12 @@ class player {
     do {
       dominoIteration = deckStockDominoIterator.next();
 
-      if (dominoIteration.done) break;
-      if (dominoIteration.source === "stock")
+      if (dominoIteration.value && dominoIteration.source === "stock") {
+        this.addDomino(dominoIteration.value);
         this._logDraw(dominoIteration.value);
+      }
+
+      if (dominoIteration.done) break;
 
       linkResult = links.link(dominoIteration.value);
     } while (!linkResult && stock.length);

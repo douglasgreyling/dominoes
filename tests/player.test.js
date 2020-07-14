@@ -55,7 +55,7 @@ describe("Player", () => {
         player.play(links, stock);
         player.play(links, stock);
 
-        expect(player.dominoes.length).toBe(2);
+        expect(player.dominoes.length).toBe(3);
         expect(stock.length).toBe(0);
       });
     });
@@ -67,7 +67,7 @@ describe("Player", () => {
 
         player.play(links, stock);
 
-        expect(player.dominoes.length).toBe(2);
+        expect(player.dominoes.length).toBe(3);
         expect(stock.length).toBe(0);
       });
     });
