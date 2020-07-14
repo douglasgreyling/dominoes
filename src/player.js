@@ -4,6 +4,7 @@ class player {
   constructor(name, dominoes = []) {
     this.name = name;
     this._dominoes = dominoes;
+    this.canPlay = true;
   }
 
   addDomino = (domino) => {
@@ -26,20 +27,23 @@ class player {
     do {
       dominoIteration = deckStockDominoIterator.next();
 
-      if (dominoIteration.value && dominoIteration.source === "stock") {
+      if (!dominoIteration.value) break;
+
+      if (dominoIteration.source === "stock") {
         this.addDomino(dominoIteration.value);
         this._logDraw(dominoIteration.value);
       }
 
-      if (dominoIteration.done) break;
-
       linkResult = links.link(dominoIteration.value);
-    } while (!linkResult && stock.length);
+
+      if (linkResult) this.canPlay = true;
+    } while (!linkResult);
 
     if (linkResult) {
       this._removeLinkedDominoFromDeck(linkResult.domino);
       this._logPlay(linkResult);
-    } else if (dominoIteration.done) {
+    } else {
+      this.canPlay = false;
       this._logTurnSkip();
     }
   };

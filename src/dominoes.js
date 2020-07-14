@@ -14,13 +14,13 @@ class Dominoes {
     console.log("Game starting with first tile:", this.links.toString());
     let currentPlayer;
 
-    while (this.stock.length) {
+    while (true) {
       currentPlayer = this._fetchCurrentPlayer();
       currentPlayer.play(this.links, this.stock);
 
       console.log("Board is now:", this.links.toString());
 
-      if (this._isWinner(currentPlayer)) break;
+      if (this._isWinner(currentPlayer) || this._noOneCanPlay()) break;
       else this.turn += 1;
     }
 
@@ -50,6 +50,8 @@ class Dominoes {
   _fetchCurrentPlayer = () => this.players[this.turn % this.players.length];
 
   _isWinner = (player) => !player.dominoes.length;
+
+  _noOneCanPlay = () => this.players.every((p) => !p.canPlay);
 
   _logOutcome = () => {
     if (this._isWinner(this._fetchCurrentPlayer())) {
